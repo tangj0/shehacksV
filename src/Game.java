@@ -43,7 +43,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     private ImageIcon trainBodyImg;
 
     //TRAIN length
-    private int trainLength = 0; //default length
+    private int trainLength = 1; //default length
 
     //TIMER
     private Timer timer;
@@ -63,7 +63,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
             350, 375, 400, 425, 450, 500, 525, 550, 600, 625};
     private ImageIcon waterBottleImg;
     private Random random = new Random();
-    private int xpos = random.nextInt(29); //number of x position
+    private int xpos = random.nextInt(25); //number of x position
     private int ypos = random.nextInt(20); //number of y position
 
 
@@ -112,7 +112,8 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 /**LENGTH OF TRAIN CART**/
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("arial", Font.PLAIN, 14));
-        graphics.drawString("# Obj: " + trainLength, 780, 50);
+        int nbCarts = trainLength-1;
+        graphics.drawString("# Carts: " + nbCarts, 780, 50);
 
 
         /**GARBAGE CART**/
@@ -123,7 +124,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         /**ADD Head + body**/
 
         for (int i = 0; i < trainLength; i++) {
-
+            System.out.println("i= "+i);
             //1) Detect direction of head. i=0 ==> HEAD
             //1A Left Head
             if (isLeft && i == 0) {
@@ -161,7 +162,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         if ((xWaterbottle[xpos] == xTrainCart[0]) && yWaterbottle[ypos] == yTrainCart[0]) {  //same position
             score++; //increment the score
             trainLength++;
-            xpos = random.nextInt(30);  //generate new enemies
+            xpos = random.nextInt(25);  //generate new enemies
             ypos = random.nextInt(20);
 
         }
@@ -241,7 +242,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 //4) Check whether the current position will be out of frame
                 if (xTrainCart[i] > 850) {  //TODO: Change this value, when adding walls
                     //TODO: PUT GAME OVER
-                    System.out.println("GAME OVER: HIT RIGHT WALL DEAD");
+                   // System.out.println("GAME OVER: HIT RIGHT WALL DEAD");
 
                     //xTrainCart[i]=25; in tutorial: when go right, it appears back in the left wall
                 }
@@ -273,7 +274,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 //4) Check whether the current position will be out of frame
                 if (xTrainCart[i] < 50) {  //TODO: Change this value, when adding walls
                     //TODO: PUT GAME OVER
-                    System.out.println("GAME OVER: HIT RIGHT WALL DEAD");
+                  //  System.out.println("GAME OVER: HIT RIGHT WALL DEAD");
 
                     //xTrainCart[i]=850; in tutorial: when go right, it appears back in the left wall
                 }
@@ -302,7 +303,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 //4) Check whether the current position will be out of frame
                 if (yTrainCart[i] > 625) {  //TODO: Change this value, when adding walls
                     //TODO: PUT GAME OVER
-                    System.out.println("GAME OVER: HIT BOTTOM WALL DEAD");
+                   // System.out.println("GAME OVER: HIT BOTTOM WALL DEAD");
 
                     //xTrainCart[i]=850; in tutorial: when go right, it appears back in the left wall
                 }
@@ -330,7 +331,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 //4) Check whether the current position will be out of frame
                 if (yTrainCart[i] < 75) {  //TODO: Change this value, when adding walls
                     //TODO: PUT GAME OVER
-                    System.out.println("GAME OVER: HIT BOTTOM WALL DEAD");
+                  //  System.out.println("GAME OVER: HIT BOTTOM WALL DEAD");
 
                     //xTrainCart[i]=625; in tutorial: when go right, it appears back in the left wall
                 }
@@ -353,7 +354,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             moves = 0;
             score = 0;
-            trainLength = 0;
+            trainLength = 1;
             repaint();
         }
 
