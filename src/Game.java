@@ -33,10 +33,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
 
     //TRAIN HEAD IMAGE ICON
-    private ImageIcon leftTrainHeadImg;
-    private ImageIcon rightTrainHeadImg;
-    private ImageIcon upTrainHeadImg;
-    private ImageIcon downTrainHeadImg;
+    private ImageIcon trainHeadImg;
     private int TRAIN_HEAD_SIZE = 25;
 
     //TRAIN BODY IMAGE ICON
@@ -109,43 +106,38 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         graphics.setFont(new Font("arial", Font.PLAIN, 14));
         graphics.drawString("Scores: " + score, 780, 30);
 
-/**LENGTH OF TRAIN CART**/
+        /**LENGTH OF TRAIN CART**/
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("arial", Font.PLAIN, 14));
         int nbCarts = trainLength-1;
         graphics.drawString("# Carts: " + nbCarts, 780, 50);
 
 
-        /**GARBAGE CART**/
-//HEAD
-        rightTrainHeadImg = new ImageIcon("train_head_right.png");  //TODO: change file name
-        rightTrainHeadImg.paintIcon(this, graphics, xTrainCart[0], yTrainCart[0]);
+        /**Recycling Train**/
+
+        trainHeadImg = new ImageIcon("train_head_right.png");  //TODO: change file name
 
         /**ADD Head + body**/
-
         for (int i = 0; i < trainLength; i++) {
-            System.out.println("i= "+i);
+
             //1) Detect direction of head. i=0 ==> HEAD
             //1A Left Head
             if (isLeft && i == 0) {
-                leftTrainHeadImg = new ImageIcon("train_head_left.png"); //TODO: change file name
-                leftTrainHeadImg.paintIcon(this, graphics, xTrainCart[i], yTrainCart[i]);
+                trainHeadImg = new ImageIcon("train_head_left.png"); //TODO: change file name
             }
             //1B RIGHT Head
             if (isRight && i == 0) {
-                rightTrainHeadImg = new ImageIcon("train_head_right.png"); //TODO: change file name
-                rightTrainHeadImg.paintIcon(this, graphics, xTrainCart[i], yTrainCart[i]);
+                trainHeadImg = new ImageIcon("train_head_right.png"); //TODO: change file name
             }
             //1C UP Head
             if (isUp && i == 0) {
-                upTrainHeadImg = new ImageIcon("train_head_up.png"); //TODO: change file name
-                upTrainHeadImg.paintIcon(this, graphics, xTrainCart[i], yTrainCart[i]);
+                trainHeadImg = new ImageIcon("train_head_up.png"); //TODO: change file name
             }
             //1D DOWN Head
             if (isDown && i == 0) {
-                downTrainHeadImg = new ImageIcon("train_head_down.png"); //TODO: change file name
-                downTrainHeadImg.paintIcon(this, graphics, xTrainCart[i], yTrainCart[i]);
+                trainHeadImg = new ImageIcon("train_head_down.png"); //TODO: change file name
             }
+            trainHeadImg.paintIcon(this, graphics, xTrainCart[0], yTrainCart[0]);
 
             //1E BODY
             if (i != 0) {  //not head
