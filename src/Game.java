@@ -34,7 +34,9 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     //TRAIN HEAD IMAGE ICON
     private ImageIcon trainHeadImg;
-    private int TRAIN_HEAD_SIZE = 25;
+    private int IMAGE_SIZE = 50;
+    private int r = IMAGE_SIZE/2;
+    private double h = 2*Math.sqrt(Math.pow(r,2) + Math.pow(r,2));
 
     //TRAIN BODY IMAGE ICON
     private ImageIcon trainBodyImg;
@@ -50,18 +52,13 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     int moves = 0;
 
     /**PLASTIC BOTTLES**/
-
-    private int BOTTLE_SIZE = 25;
-
-    //PLASTIC BOTTLES POSITION
-    private int[] xWaterbottle = {25, 50, 75, 100, 125, 150, 175, 225, 250, 300, 325,
-            350, 375, 400, 425, 450, 500, 525, 550, 600, 625, 650, 675, 700, 750, 775, 800, 825, 850};
-    private int[] yWaterbottle = {75, 100, 125, 150, 175, 200, 225, 250, 300, 325,
-            350, 375, 400, 425, 450, 500, 525, 550, 600, 625};
     private ImageIcon waterBottleImg;
-    private Random random = new Random();
-    private int xpos = random.nextInt(25); //number of x position
-    private int ypos = random.nextInt(20); //number of y position
+    private int Xmax = 850 + 25;
+    private int Xmin = 25;
+    private int Ymax = 650 + 75;
+    private int Ymin = 75;
+    private int xpos = (int) (Math.random() * (Xmax - Xmin)) + Xmin;
+    private int ypos = (int) (Math.random() * (Ymax - Ymin)) + Ymin;
 
 
     public Game() {
@@ -115,7 +112,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
         /**Recycling Train**/
 
-        trainHeadImg = new ImageIcon("train_head_right.png");  //TODO: change file name
+        trainHeadImg = new ImageIcon("train_head_right.png");
 
         /**ADD Head + body**/
         for (int i = 0; i < trainLength; i++) {
@@ -123,58 +120,57 @@ public class Game extends JPanel implements KeyListener, ActionListener {
             //1) Detect direction of head. i=0 ==> HEAD
             //1A Left Head
             if (isLeft && i == 0) {
-                trainHeadImg = new ImageIcon("train_head_left.png"); //TODO: change file name
+                trainHeadImg = new ImageIcon("train_head_left.png");
             }
             //1B RIGHT Head
             if (isRight && i == 0) {
-                trainHeadImg = new ImageIcon("train_head_right.png"); //TODO: change file name
+                trainHeadImg = new ImageIcon("train_head_right.png");
             }
             //1C UP Head
             if (isUp && i == 0) {
-                trainHeadImg = new ImageIcon("train_head_up.png"); //TODO: change file name
+                trainHeadImg = new ImageIcon("train_head_up.png");
             }
             //1D DOWN Head
             if (isDown && i == 0) {
-                trainHeadImg = new ImageIcon("train_head_down.png"); //TODO: change file name
+                trainHeadImg = new ImageIcon("train_head_down.png");
             }
             trainHeadImg.paintIcon(this, graphics, xTrainCart[0], yTrainCart[0]);
 
             //1E BODY
             if (i != 0) {  //not head
-                trainBodyImg = new ImageIcon("cart_with_wheels.png"); //TODO: change file name
+                trainBodyImg = new ImageIcon("cart_with_wheels.png");
                 trainBodyImg.paintIcon(this, graphics, xTrainCart[i], yTrainCart[i]);
             }
+            System.out.println("x " + xTrainCart[i] + "  " + "y " + yTrainCart[i]);
 
 
         }
 
         /**DETECTION COLLISION with OBJ**/
-        waterBottleImg = new ImageIcon("bottle.png"); //TODO: Change file name
-//compare with HEAD traincart
-        if ((xWaterbottle[xpos] == xTrainCart[0]) && yWaterbottle[ypos] == yTrainCart[0]) {  //same position
-            score++; //increment the score
+        waterBottleImg = new ImageIcon("water_bottle.png");
+        if (Math.sqrt( Math.pow(xpos-xTrainCart[0],2) + Math.pow(ypos-yTrainCart[0],2) ) < h){
+            score++;
             trainLength++;
-            xpos = random.nextInt(25);  //generate new enemies
-            ypos = random.nextInt(20);
-
+            xpos = (int) (Math.random() * (Xmax - Xmin)) + Xmin;
+            ypos = (int) (Math.random() * (Ymax - Ymin)) + Ymin;
         }
-        waterBottleImg.paintIcon(this, graphics, xWaterbottle[xpos], yWaterbottle[ypos]);
+        waterBottleImg.paintIcon(this, graphics, xpos, ypos);
 
-        /**DETECTION COLLISION with SELF**/
-        for (int i = 1; i < trainLength; i++) {
-            //check if position of body = position HEAD
-            if (xTrainCart[i] == xTrainCart[0] && yTrainCart[i] == yTrainCart[0]) {
-                //COLLISION occurs
-
-                isRight = false;
-                isLeft = false;
-                isUp = false;
-                isDown = false;
-
-                displayGameOver(graphics);
-
-            }
-        }
+//        /**DETECTION COLLISION with SELF**/
+//        for (int i = 1; i < trainLength; i++) {
+//            //check if position of body = position HEAD
+//            if (xTrainCart[i] == xTrainCart[0] && yTrainCart[i] == yTrainCart[0]) {
+//                //COLLISION occurs
+//
+//                isRight = false;
+//                isLeft = false;
+//                isUp = false;
+//                isDown = false;
+//
+//                displayGameOver(graphics);
+//
+//            }
+//        }
 
         //TODO: WALL COLLISION
         /**DETECTION COLLISION with wall**/
@@ -211,7 +207,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         timer.start();
-//1) CHECK DIRECTION
+        //1) CHECK DIRECTION
         //1A: Right
         if (isRight) {
 
@@ -231,7 +227,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 } else {//4B) BODY, set x position to be same as prev cart position
                     xTrainCart[i] = xTrainCart[i - 1];
                 }
-//4) Check whether the current position will be out of frame
+                //4) Check whether the current position will be out of frame
                 if (xTrainCart[i] > 850) {  //TODO: Change this value, when adding walls
                     //TODO: PUT GAME OVER
                    // System.out.println("GAME OVER: HIT RIGHT WALL DEAD");
