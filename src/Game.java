@@ -26,11 +26,10 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     //WALL
     private ImageIcon wallImg;
-    private int RIGHT_WALL_POS = 850;  //TODO: Change these values when adding WALL Img
+    private int RIGHT_WALL_POS = 850+25;  //TODO: Change these values when adding WALL Img
     private int LEFT_WALL_POS = 25; //TODO: Change these values when adding WALL Img
     private int UP_WALL_POS = 75;  //TODO: Change these values when adding WALL Img
-    private int DOWN_WALL_POS = 850; //TODO: Change these values when adding WALL Img
-
+    private int DOWN_WALL_POS = 650+75; //TODO: Change these values when adding WALL Img
 
     //TRAIN HEAD IMAGE ICON
     private ImageIcon trainHeadImg;
@@ -87,6 +86,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         /**TITLE**/
         graphics.setColor(Color.WHITE);  //border
         graphics.drawRect(24, 10, 851, 55);
+
         //TODO: Uncomment. Write file name
         //titleImage = new ImageIcon("imagenametitle");  //image
         //titleImage.paintIcon(this,graphics,25,11);
@@ -141,7 +141,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 trainBodyImg = new ImageIcon("cart_with_wheels.png");
                 trainBodyImg.paintIcon(this, graphics, xTrainCart[i], yTrainCart[i]);
             }
-            System.out.println("x " + xTrainCart[i] + "  " + "y " + yTrainCart[i]);
+            //System.out.println("x " + xTrainCart[i] + "  " + "y " + yTrainCart[i]);
 
 
         }
@@ -156,37 +156,39 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         }
         waterBottleImg.paintIcon(this, graphics, xpos, ypos);
 
-//        /**DETECTION COLLISION with SELF**/
-//        for (int i = 1; i < trainLength; i++) {
-//            //check if position of body = position HEAD
-//            if (xTrainCart[i] == xTrainCart[0] && yTrainCart[i] == yTrainCart[0]) {
-//                //COLLISION occurs
-//
-//                isRight = false;
-//                isLeft = false;
-//                isUp = false;
-//                isDown = false;
-//
-//                displayGameOver(graphics);
-//
-//            }
-//        }
+/*        *//**DETECTION COLLISION with SELF**//*
+        for (int i = 1; i < trainLength; i++) {
+           //check if position of body = position HEAD
+            if (xTrainCart[i] == xTrainCart[0] && yTrainCart[i] == yTrainCart[0]) {
+                //COLLISION occurs
+
+                displayGameOver(graphics);
+
+            }
+        }*/
 
         //TODO: WALL COLLISION
         /**DETECTION COLLISION with wall**/
         //CHECK HEAD
 
-        if (isRight && xTrainCart[0] > RIGHT_WALL_POS) {
+        if (isRight && xTrainCart[0]+ IMAGE_SIZE >= RIGHT_WALL_POS) {
+
             displayGameOver(graphics);
         }
-        if (isLeft && xTrainCart[0] < LEFT_WALL_POS) {
+        if (isLeft && xTrainCart[0] <= LEFT_WALL_POS) {
+            isLeft=false;
+
             displayGameOver(graphics);
         }
-        if (isUp && yTrainCart[0] < UP_WALL_POS) {
+        if (isUp && yTrainCart[0] <= UP_WALL_POS) {
+            isUp=false;
+
             displayGameOver(graphics);
         }
 
-        if (isDown && yTrainCart[0] > DOWN_WALL_POS) {
+        if (isDown && yTrainCart[0]+IMAGE_SIZE >= DOWN_WALL_POS) {
+            isDown=false;
+
             displayGameOver(graphics);
         }
 
@@ -194,7 +196,10 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     }
 
     private void displayGameOver(Graphics graphics) {
-
+        isRight = false;
+        isLeft = false;
+        isUp = false;
+        isDown = false;
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("arial", Font.BOLD, 50));
         graphics.drawString("GAME OVER", 300, 300);
