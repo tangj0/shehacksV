@@ -171,23 +171,10 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         /**DETECTION COLLISION with wall**/
         //CHECK HEAD
 
-        if (isRight && xTrainCart[0]+ IMAGE_SIZE >= RIGHT_WALL_POS) {
-
-            displayGameOver(graphics);
-        }
-        if (isLeft && xTrainCart[0] <= LEFT_WALL_POS) {
-            isLeft=false;
-
-            displayGameOver(graphics);
-        }
-        if (isUp && yTrainCart[0] <= UP_WALL_POS) {
-            isUp=false;
-
-            displayGameOver(graphics);
-        }
-
-        if (isDown && yTrainCart[0]+IMAGE_SIZE >= DOWN_WALL_POS) {
-            isDown=false;
+        if (xTrainCart[0]+ IMAGE_SIZE >= RIGHT_WALL_POS ||
+                xTrainCart[0] <= LEFT_WALL_POS ||
+                yTrainCart[0] <= UP_WALL_POS ||
+                yTrainCart[0]+IMAGE_SIZE >= DOWN_WALL_POS) {
 
             displayGameOver(graphics);
         }
@@ -200,12 +187,17 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         isLeft = false;
         isUp = false;
         isDown = false;
+        graphics.setColor(Color.BLACK);
+        graphics.fillRect(25, 75, 850, 650);
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("arial", Font.BOLD, 50));
         graphics.drawString("GAME OVER", 300, 300);
 
         graphics.setFont(new Font("arial", Font.BOLD, 20));
         graphics.drawString("Press SPACE to restart", 350, 340);
+
+        //JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+//        frame.setBackground(Color.decode("0xFF0096"));  //TODO: Change this ugly PINK background
         repaint();
     }
 
