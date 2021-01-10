@@ -26,17 +26,17 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     //WALL
     private ImageIcon wallImg;
-    private int RIGHT_WALL_POS = 850+25;  //TODO: Change these values when adding WALL Img
+    private int RIGHT_WALL_POS = 850 + 25;  //TODO: Change these values when adding WALL Img
     private int LEFT_WALL_POS = 25; //TODO: Change these values when adding WALL Img
     private int UP_WALL_POS = 75;  //TODO: Change these values when adding WALL Img
-    private int DOWN_WALL_POS = 650+75; //TODO: Change these values when adding WALL Img
+    private int DOWN_WALL_POS = 650 + 75; //TODO: Change these values when adding WALL Img
 
     //TRAIN HEAD IMAGE ICON
     private ImageIcon trainHeadImg;
     private ImageIcon collectorImg;
     private int IMAGE_SIZE = 50;
-    private int r = IMAGE_SIZE/2;
-    private double h = 2*Math.sqrt(Math.pow(r,2) + Math.pow(r,2));
+    private int r = IMAGE_SIZE / 2;
+    private double h = 2 * Math.sqrt(Math.pow(r, 2) + Math.pow(r, 2));
 
     //TRAIN BODY IMAGE ICON
     private ImageIcon trainBodyImg;
@@ -51,14 +51,18 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     int moves = 0;
 
-    /**PLASTIC BOTTLES**/
+    /**
+     * PLASTIC BOTTLES
+     **/
     private ImageIcon waterBottleImg;
-    private int Xmax = 850 + 25;
-    private int Xmin = 25;
-    private int Ymax = 650 + 75;
-    private int Ymin = 75;
-    private int xpos = (int) (Math.random() * (Xmax - Xmin)) + Xmin;
-    private int ypos = (int) (Math.random() * (Ymax - Ymin)) + Ymin;
+    private int Xmax = 820;
+    private int Ymax = 670;
+    private int Xmin1 = 20; // collector = [20, 80]
+    private int Xmin2 = 80;
+    private int Ymin1 = 70; // collector = [70, 110]
+    private int Ymin2 = 110;
+    private int xpos = (int) (Math.random() * (Xmax - Xmin2)) + Xmin2;
+    private int ypos = (int) (Math.random() * (Ymax - Ymin2)) + Ymin2;
 
 
     public Game() {
@@ -163,18 +167,20 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 trainBodyImg = new ImageIcon((scaledTrainBodyImg));
                 trainBodyImg.paintIcon(this, graphics, xTrainCart[i], yTrainCart[i]);
             }
-            //System.out.println("x " + xTrainCart[i] + "  " + "y " + yTrainCart[i]);
-
-
         }
+
 
         /**DETECTION COLLISION with OBJ**/
         waterBottleImg = new ImageIcon("water_bottle.png");
         if (Math.sqrt( Math.pow(xpos-xTrainCart[0],2) + Math.pow(ypos-yTrainCart[0],2) ) < h){
             score++;
             trainLength++;
-            xpos = (int) (Math.random() * (Xmax - Xmin)) + Xmin;
-            ypos = (int) (Math.random() * (Ymax - Ymin)) + Ymin;
+            xpos = (int) (Math.random() * (Xmax - Xmin1)) + Xmin1;
+            ypos = (int) (Math.random() * (Ymax - Ymin1)) + Ymin1;
+            if (xpos < Xmin2 && ypos < Ymin2){
+                xpos = (int) (Math.random() * (Xmax - Xmin1)) + Xmin1; //just playing the probability...lol
+                ypos = (int) (Math.random() * (Ymax - Ymin1)) + Ymin1;
+            }
         }
         waterBottleImg.paintIcon(this, graphics, xpos, ypos);
 
@@ -183,16 +189,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
            //check if position of body = position HEAD
             if (xTrainCart[i] == xTrainCart[0] && yTrainCart[i] == yTrainCart[0]) {
                 //COLLISION occurs
-
                 displayGameOver(graphics);
-
             }
         }
 
-        //TODO: WALL COLLISION
         /**DETECTION COLLISION with wall**/
-        //CHECK HEAD
-
         if (xTrainCart[0]+ IMAGE_SIZE >= RIGHT_WALL_POS ||
                 xTrainCart[0] <= LEFT_WALL_POS ||
                 yTrainCart[0] <= UP_WALL_POS ||
@@ -218,16 +219,14 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         graphics.setFont(new Font("times new roman", Font.BOLD, 30));
         graphics.drawString("Press SPACE to restart", 290, 365);
 
-        //JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-//        frame.setBackground(Color.decode("0xFF0096"));  //TODO: Change this ugly PINK background
         repaint();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         timer.start();
+
         //1) CHECK DIRECTION
-        //1A: Right
         if (isRight) {
 
             /**POSITIONS OF HEAD & CARTS**/
@@ -246,20 +245,10 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 } else {//4B) BODY, set x position to be same as prev cart position
                     xTrainCart[i] = xTrainCart[i - 1];
                 }
-                //4) Check whether the current position will be out of frame
-                if (xTrainCart[i] > 850) {  //TODO: Change this value, when adding walls
-                    //TODO: PUT GAME OVER
-                   // System.out.println("GAME OVER: HIT RIGHT WALL DEAD");
-
-                    //xTrainCart[i]=25; in tutorial: when go right, it appears back in the left wall
-                }
-
             }
             repaint(); //it will call paint() automatically
-
-
         }
-//1B: LEFT
+
         if (isLeft) {
 
             /**POSITIONS OF HEAD & CARTS**/
@@ -278,20 +267,12 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 } else {//4B) BODY, set x position to be same as prev cart position
                     xTrainCart[i] = xTrainCart[i - 1];
                 }
-//4) Check whether the current position will be out of frame
-                if (xTrainCart[i] < 50) {  //TODO: Change this value, when adding walls
-                    //TODO: PUT GAME OVER
-                  //  System.out.println("GAME OVER: HIT RIGHT WALL DEAD");
-
-                    //xTrainCart[i]=850; in tutorial: when go right, it appears back in the left wall
-                }
 
             }
             repaint(); //it will call paint() automatically
 
         }
 
-//DOWN
         if (isDown) {
 
             /**POSITIONS OF HEAD & CARTS**/
@@ -307,19 +288,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 } else {//4B) BODY, set x position to be same as prev cart position
                     yTrainCart[i] = yTrainCart[i - 1];
                 }
-//4) Check whether the current position will be out of frame
-                if (yTrainCart[i] > 625) {  //TODO: Change this value, when adding walls
-                    //TODO: PUT GAME OVER
-                   // System.out.println("GAME OVER: HIT BOTTOM WALL DEAD");
-
-                    //xTrainCart[i]=850; in tutorial: when go right, it appears back in the left wall
-                }
 
             }
             repaint(); //it will call paint() automatically
         }
 
-        //UP
         if (isUp) {
 
             /**POSITIONS OF HEAD & CARTS**/
@@ -335,14 +308,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 } else {
                     yTrainCart[i] = yTrainCart[i - 1];
                 }
-//4) Check whether the current position will be out of frame
-                if (yTrainCart[i] < 75) {  //TODO: Change this value, when adding walls
-                    //TODO: PUT GAME OVER
-                  //  System.out.println("GAME OVER: HIT BOTTOM WALL DEAD");
-
-                    //xTrainCart[i]=625; in tutorial: when go right, it appears back in the left wall
-                }
-
             }
             repaint(); //it will call paint() automatically
         }

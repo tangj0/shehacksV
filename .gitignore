@@ -1,3 +1,4 @@
 *.class
 *.un~
 .gitignore~
+out/production/garbage-collection/Game.class
