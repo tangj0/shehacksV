@@ -33,6 +33,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     //TRAIN HEAD IMAGE ICON
     private ImageIcon trainHeadImg;
+    private ImageIcon collectorImg;
     private int IMAGE_SIZE = 50;
     private int r = IMAGE_SIZE/2;
     private double h = 2*Math.sqrt(Math.pow(r,2) + Math.pow(r,2));
@@ -45,7 +46,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     //TIMER
     private Timer timer;
-    private int delayTime = 200;
+    private int delayTime = 175;
 
 
     int moves = 0;
@@ -109,10 +110,16 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         int nbCarts = trainLength-1;
         graphics.drawString("# Carts: " + nbCarts, 780, 50);
 
+        /**Recycling Station**/
+        Image scaledCollectorImg = new ImageIcon("collector.png").getImage();
+        scaledCollectorImg = scaledCollectorImg.getScaledInstance(110, 110, Image.SCALE_SMOOTH);
+        collectorImg = new ImageIcon(scaledCollectorImg);
+        collectorImg.paintIcon(this, graphics, 20, 55);
 
         /**Recycling Train**/
-
-        trainHeadImg = new ImageIcon("train_head_right.png");
+        Image scaledTrainHeadImg = new ImageIcon("train_head_right.png").getImage();
+        scaledTrainHeadImg = scaledTrainHeadImg.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        trainHeadImg = new ImageIcon((scaledTrainHeadImg));
 
         /**ADD Head + body**/
         for (int i = 0; i < trainLength; i++) {
@@ -120,25 +127,36 @@ public class Game extends JPanel implements KeyListener, ActionListener {
             //1) Detect direction of head. i=0 ==> HEAD
             //1A Left Head
             if (isLeft && i == 0) {
-                trainHeadImg = new ImageIcon("train_head_left.png");
+                scaledTrainHeadImg = new ImageIcon("train_head_left.png").getImage();
+                scaledTrainHeadImg = scaledTrainHeadImg.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+                trainHeadImg = new ImageIcon((scaledTrainHeadImg));
             }
             //1B RIGHT Head
             if (isRight && i == 0) {
-                trainHeadImg = new ImageIcon("train_head_right.png");
+                scaledTrainHeadImg = new ImageIcon("train_head_right.png").getImage();
+                scaledTrainHeadImg = scaledTrainHeadImg.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+                trainHeadImg = new ImageIcon((scaledTrainHeadImg));
             }
             //1C UP Head
             if (isUp && i == 0) {
-                trainHeadImg = new ImageIcon("train_head_up.png");
+                scaledTrainHeadImg = new ImageIcon("train_head_up.png").getImage();
+                scaledTrainHeadImg = scaledTrainHeadImg.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+                trainHeadImg = new ImageIcon((scaledTrainHeadImg));
             }
             //1D DOWN Head
             if (isDown && i == 0) {
-                trainHeadImg = new ImageIcon("train_head_down.png");
+                scaledTrainHeadImg = new ImageIcon("train_head_down.png").getImage();
+                scaledTrainHeadImg = scaledTrainHeadImg.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+                trainHeadImg = new ImageIcon((scaledTrainHeadImg));
             }
+
             trainHeadImg.paintIcon(this, graphics, xTrainCart[0], yTrainCart[0]);
 
             //1E BODY
             if (i != 0) {  //not head
-                trainBodyImg = new ImageIcon("cart_with_wheels.png");
+                Image scaledTrainBodyImg = new ImageIcon("cart_with_wheels.png").getImage();
+                scaledTrainBodyImg = scaledTrainBodyImg.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+                trainBodyImg = new ImageIcon((scaledTrainBodyImg));
                 trainBodyImg.paintIcon(this, graphics, xTrainCart[i], yTrainCart[i]);
             }
             //System.out.println("x " + xTrainCart[i] + "  " + "y " + yTrainCart[i]);
