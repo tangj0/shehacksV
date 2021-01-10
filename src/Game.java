@@ -96,26 +96,29 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         graphics.setColor(Color.GREEN); //border
         graphics.drawRect(24, 74, 851, 577);
 
-        graphics.setColor(Color.BLACK);  //background
+        graphics.setColor(Color.decode("#732101"));  //background
+        //graphics.setColor(Color.BLACK);
         //graphics.fillRect(25, 75, 850, 650);
         graphics.fillRect(0, 0, 900, 800);
 
+        graphics.setColor(Color.decode("#290C00"));
+        graphics.fillRect(18, 75, 850, 650);
+
         /**score**/
-        graphics.setColor(Color.WHITE);
-        graphics.setFont(new Font("arial", Font.PLAIN, 14));
+        graphics.setColor(Color.decode("#F9EDE6"));
+        graphics.setFont(new Font("times new roman", Font.BOLD, 17));
         graphics.drawString("Scores: " + score, 780, 30);
 
         /**LENGTH OF TRAIN CART**/
-        graphics.setColor(Color.WHITE);
-        graphics.setFont(new Font("arial", Font.PLAIN, 14));
+        graphics.setFont(new Font("times new roman", Font.BOLD, 17));
         int nbCarts = trainLength-1;
-        graphics.drawString("# Carts: " + nbCarts, 780, 50);
+        graphics.drawString("# Carts: " + nbCarts, 778, 55);
 
         /**Recycling Station**/
         Image scaledCollectorImg = new ImageIcon("collector.png").getImage();
         scaledCollectorImg = scaledCollectorImg.getScaledInstance(110, 110, Image.SCALE_SMOOTH);
         collectorImg = new ImageIcon(scaledCollectorImg);
-        collectorImg.paintIcon(this, graphics, 20, 55);
+        collectorImg.paintIcon(this, graphics, 5, 40);
 
         /**Recycling Train**/
         Image scaledTrainHeadImg = new ImageIcon("train_head_right.png").getImage();
@@ -206,14 +209,14 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         isLeft = false;
         isUp = false;
         isDown = false;
-        graphics.setColor(Color.BLACK);
-        graphics.fillRect(25, 75, 850, 650);
-        graphics.setColor(Color.WHITE);
-        graphics.setFont(new Font("arial", Font.BOLD, 50));
-        graphics.drawString("GAME OVER", 300, 300);
+        graphics.setColor(Color.decode("#290C00"));
+        graphics.fillRect(18, 75, 850, 650);
+        graphics.setColor(Color.decode("#F9EDE6"));
+        graphics.setFont(new Font("times new roman", Font.BOLD, 60));
+        graphics.drawString("GAME OVER", 255, 310);
 
-        graphics.setFont(new Font("arial", Font.BOLD, 20));
-        graphics.drawString("Press SPACE to restart", 350, 340);
+        graphics.setFont(new Font("times new roman", Font.BOLD, 30));
+        graphics.drawString("Press SPACE to restart", 290, 365);
 
         //JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
 //        frame.setBackground(Color.decode("0xFF0096"));  //TODO: Change this ugly PINK background
