@@ -4,17 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
+
 
 /**
  * Codes inspired by https://www.youtube.com/watch?v=_SqnzvJuKiA
  */
 public class Game extends JPanel implements KeyListener, ActionListener {
-    //TITLE OF THE GAME?
-    private ImageIcon titleImg;  //TODO:Add Images
-
     //SCORE
     private int score = 0;
+
     //Contains train head and cats (body)
     private int[] xTrainCart = new int[800];
     private int[] yTrainCart = new int[800];
@@ -26,10 +24,10 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     //WALL
     private ImageIcon wallImg;
-    private int RIGHT_WALL_POS = 850 + 25;  //TODO: Change these values when adding WALL Img
-    private int LEFT_WALL_POS = 25; //TODO: Change these values when adding WALL Img
-    private int UP_WALL_POS = 75;  //TODO: Change these values when adding WALL Img
-    private int DOWN_WALL_POS = 650 + 75; //TODO: Change these values when adding WALL Img
+    private int RIGHT_WALL_POS = 850 + 25;
+    private int LEFT_WALL_POS = 20;
+    private int UP_WALL_POS = 70;
+    private int DOWN_WALL_POS = 650 + 75;
 
     //TRAIN HEAD IMAGE ICON
     private ImageIcon trainHeadImg;
@@ -46,14 +44,12 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     //TIMER
     private Timer timer;
-    private int delayTime = 175;
+    private int delayTime = 200; //175
 
 
     int moves = 0;
 
-    /**
-     * PLASTIC BOTTLES
-     **/
+    //PLASTIC BOTTLES
     private ImageIcon waterBottleImg;
     private int Xmax = 820;
     private int Ymax = 670;
@@ -63,6 +59,10 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     private int Ymin2 = 110;
     private int xpos = (int) (Math.random() * (Xmax - Xmin2)) + Xmin2;
     private int ypos = (int) (Math.random() * (Ymax - Ymin2)) + Ymin2;
+
+    //Collector
+    private int Xcollector = 5;
+    private int Ycollector = 40;
 
 
     public Game() {
@@ -122,7 +122,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         Image scaledCollectorImg = new ImageIcon("collector.png").getImage();
         scaledCollectorImg = scaledCollectorImg.getScaledInstance(110, 110, Image.SCALE_SMOOTH);
         collectorImg = new ImageIcon(scaledCollectorImg);
-        collectorImg.paintIcon(this, graphics, 5, 40);
+        collectorImg.paintIcon(this, graphics, Xcollector, Ycollector);
 
         /**Recycling Train**/
         Image scaledTrainHeadImg = new ImageIcon("train_head_right.png").getImage();
@@ -173,7 +173,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         /**DETECTION COLLISION with OBJ**/
         waterBottleImg = new ImageIcon("water_bottle.png");
         if (Math.sqrt( Math.pow(xpos-xTrainCart[0],2) + Math.pow(ypos-yTrainCart[0],2) ) < h){
-            score++;
+            //score++;
             trainLength++;
             xpos = (int) (Math.random() * (Xmax - Xmin1)) + Xmin1;
             ypos = (int) (Math.random() * (Ymax - Ymin1)) + Ymin1;
@@ -200,6 +200,13 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 yTrainCart[0]+IMAGE_SIZE >= DOWN_WALL_POS) {
 
             displayGameOver(graphics);
+        }
+
+        if (trainLength >= 5 &&
+                xTrainCart[0] < Xcollector + Xmin2 &&
+                yTrainCart[0] < Ycollector + Ymin2){
+            score = score + trainLength/5;
+            trainLength = trainLength%5;
         }
 
         graphics.dispose();
