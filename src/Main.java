@@ -6,8 +6,8 @@ public class Main {
         JFrame frame = new JFrame();
         Game game = new Game();
 
-        frame.setBounds(10, 10, 900, 800); //set size
-        frame.setBackground(Color.decode("0xFF0096"));  //TODO: Change this ugly PINK background
+        frame.setBounds(0, 0, 900, 800); //set size
+      //  frame.setBackground(Color.decode("0xFF0096"));  //TODO: Change this ugly PINK background
 
         frame.setResizable(false);
         frame.setVisible(true);

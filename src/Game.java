@@ -84,9 +84,9 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         }
 
 
-        /**TITLE**/
+/*        *//**TITLE**//*
         graphics.setColor(Color.WHITE);  //border
-        graphics.drawRect(24, 10, 851, 55);
+        graphics.drawRect(24, 10, 851, 55);*/
 
         //TODO: Uncomment. Write file name
         //titleImage = new ImageIcon("imagenametitle");  //image
@@ -97,7 +97,8 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         graphics.drawRect(24, 74, 851, 577);
 
         graphics.setColor(Color.BLACK);  //background
-        graphics.fillRect(25, 75, 850, 650);
+        //graphics.fillRect(25, 75, 850, 650);
+        graphics.fillRect(0, 0, 900, 800);
 
         /**score**/
         graphics.setColor(Color.WHITE);
@@ -174,7 +175,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         }
         waterBottleImg.paintIcon(this, graphics, xpos, ypos);
 
-/*        *//**DETECTION COLLISION with SELF**//*
+        /*DETECTION COLLISION with SELF*/
         for (int i = 1; i < trainLength; i++) {
            //check if position of body = position HEAD
             if (xTrainCart[i] == xTrainCart[0] && yTrainCart[i] == yTrainCart[0]) {
@@ -183,7 +184,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 displayGameOver(graphics);
 
             }
-        }*/
+        }
 
         //TODO: WALL COLLISION
         /**DETECTION COLLISION with wall**/
