@@ -88,13 +88,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         }
 
 
-/*        *//**TITLE**//*
-        graphics.setColor(Color.WHITE);  //border
-        graphics.drawRect(24, 10, 851, 55);*/
 
-        //TODO: Uncomment. Write file name
-        //titleImage = new ImageIcon("imagenametitle");  //image
-        //titleImage.paintIcon(this,graphics,25,11);
 
         /**GAME**/
         graphics.setColor(Color.GREEN); //border
@@ -107,6 +101,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
         graphics.setColor(Color.decode("#290C00"));
         graphics.fillRect(18, 75, 850, 650);
+        /**TITLE*/
+
+        graphics.setColor(Color.decode("#F9EDE6"));
+        graphics.setFont(new Font("times new roman", Font.BOLD, 23));
+        graphics.drawString("Recycling Train", 20, 40);
 
         /**score**/
         graphics.setColor(Color.decode("#F9EDE6"));

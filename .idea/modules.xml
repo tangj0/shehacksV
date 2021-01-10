@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/garbage-collection.iml" filepath="$PROJECT_DIR$/garbage-collection.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Recycling_Train.iml" filepath="$PROJECT_DIR$/Recycling_Train.iml" />
     </modules>
   </component>
 </project>
