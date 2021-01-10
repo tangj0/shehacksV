@@ -157,7 +157,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         }
         waterBottleImg.paintIcon(this, graphics, xpos, ypos);
 
-/*        *//**DETECTION COLLISION with SELF**//*
+        /*DETECTION COLLISION with SELF*/
         for (int i = 1; i < trainLength; i++) {
            //check if position of body = position HEAD
             if (xTrainCart[i] == xTrainCart[0] && yTrainCart[i] == yTrainCart[0]) {
@@ -166,7 +166,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 displayGameOver(graphics);
 
             }
-        }*/
+        }
 
         //TODO: WALL COLLISION
         /**DETECTION COLLISION with wall**/
